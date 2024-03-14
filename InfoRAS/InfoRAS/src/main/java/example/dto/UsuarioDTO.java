@@ -1,7 +1,8 @@
 package example.dto;
 
 import example.domain.EstadoUsuario;
-
+import lombok.Data;
+@Data
 public class UsuarioDTO {
     private Long id_cliente;
     private EstadoUsuario estado;
@@ -10,15 +11,4 @@ public class UsuarioDTO {
     private String nombre;
     private String apellidos;
 
-
-    @Override
-    public String toString() {
-        return "UsuarioDTO{" +
-                "id_cliente=" + id_cliente +
-                ", estado=" + estado +
-                ", username='" + username + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", apellidos='" + apellidos + '\'' +
-                '}';
-    }
 }

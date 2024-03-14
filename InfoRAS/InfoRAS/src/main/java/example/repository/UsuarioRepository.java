@@ -32,9 +32,9 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
     Set<Usuario> findUsuarioByNombreAndApellidos(String nombre, String apellidos);
 
     @Query("SELECT i FROM Documento i WHERE i.usuario.id_usuario = :usuarioId")
-    List<Documentos> findIncidenciasByUsuarioId(@Param("usuarioId") Long usuarioId);
+    List<Documentos> findDocumentosByUsuarioId(@Param("usuarioId") Long usuarioId);
 
-    @Query("SELECT f FROM Favorito f WHERE f.usuario.id_usuario = :usuarioId")
-    List<Eventos> findByUsuarioIdUsuario(@Param("usuarioId") Long idUsuario);
+    @Query("SELECT f FROM Eventos f WHERE f.usuario.id_usuario = :usuarioId")
+    List<Eventos> findEventosByIdUsuario(@Param("usuarioId") Long idUsuario);
 
 }
