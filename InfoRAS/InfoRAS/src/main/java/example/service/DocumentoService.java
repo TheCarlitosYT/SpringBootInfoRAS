@@ -3,7 +3,6 @@ package example.service;
 
 import example.domain.TipoDoc;
 import example.dto.DocumentosDTO;
-import example.dto.DocumentosDTO;
 import jakarta.validation.Valid;
 
 
@@ -19,11 +18,9 @@ public interface DocumentoService {
 
     Set<DocumentosDTO> findByTipoDocumento(TipoDoc tipoDoc);
 
-    Set<DocumentosDTO> findByDescripcion(String descripcion);
+    DocumentosDTO addDocumento(@Valid DocumentosDTO documentosDTO);
+    DocumentosDTO modifyDocumento(long id_Documentos, DocumentosDTO newDocumentosDTO);
+    void deleteDocumento(long id_Documentos);
 
-    Set<DocumentosDTO> findByEnlace(String enlace);
-
-    DocumentosDTO addEvento(@Valid DocumentosDTO documentosDTO);
-    DocumentosDTO modifyEvento(long id_Eventos, DocumentosDTO newDocumentosDTO);
-    void deleteEvento(long id_Eventos);
+    DocumentosDTO modifyDocumentoSD(long id, DocumentosDTO data);
 }

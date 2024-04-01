@@ -2,7 +2,6 @@ package example.service;
 
 import example.domain.TipoEvento;
 import example.dto.EventosDTO;
-import example.dto.EventosDTO;
 import jakarta.validation.Valid;
 
 
@@ -17,9 +16,6 @@ public interface EventoService {
 
     Set<EventosDTO> findByTitulo(String titulo);
 
-    Set<EventosDTO> findByDescripcion(String descripcion);
-
-    Set<EventosDTO> findByEnlace(String enlace);
 
     Set<EventosDTO> findByFecha(Date fecha);
 
@@ -28,4 +24,5 @@ public interface EventoService {
     EventosDTO addEvento(@Valid EventosDTO eventosDTO);
     EventosDTO modifyEvento(long id_Eventos, EventosDTO newEventosDTO);
     void deleteEvento(long id_Eventos);
+    EventosDTO modifyEventoSD(long id, EventosDTO data);
 }

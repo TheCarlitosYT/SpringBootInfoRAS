@@ -26,11 +26,6 @@ import java.util.Set;
 
 import static example.controller.Response.NOT_FOUND;
 
-/**
- * Usuario Controller
- * @author Jean Michael
- * @version Curso 2023-2024
- */
 @RestController
 public class UsuarioController {
     @Autowired
@@ -85,9 +80,9 @@ public class UsuarioController {
             @ApiResponse(responseCode = "200", description = "Se obtuvieron los eventos del usuario", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Eventos.class)))),
             @ApiResponse(responseCode = "404", description = "El usuario no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/usuarios/{id}/eventos", produces = "application/json")
-    public ResponseEntity<List<Eventos>> getEventoByUsuarioId(@PathVariable Long id) {
+    public ResponseEntity<List<Eventos>> getEventosByUsuarioId(@PathVariable Long id) {
         List<Eventos> eventos = usuarioService.findEventosByUsuarioId(id);
         return new ResponseEntity<>(eventos, HttpStatus.OK);
     }
