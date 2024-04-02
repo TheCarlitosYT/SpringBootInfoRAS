@@ -1,10 +1,8 @@
 package example.controller;
 
-import example.domain.Documentos;
 import example.domain.Eventos;
 import example.dto.EventosDTO;
 import example.exception.EventoNotFoundException;
-import example.mapper.EventoMapper;
 import example.service.EventoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -18,9 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 import java.util.Optional;
 import java.util.Set;
+import java.util.Date;
 
 import static example.controller.Response.NOT_FOUND;
 //TODO
@@ -28,9 +27,6 @@ import static example.controller.Response.NOT_FOUND;
 public class EventosController {
     @Autowired
     private EventoService eventoService;
-
-    @Autowired
-    private EventoMapper eventoMapper;
 
     @Operation(summary = "Obtiene el listado de eventos")
     @ApiResponses(value = {
@@ -44,7 +40,7 @@ public class EventosController {
         if (nombre.isEmpty()) {
             eventoDTO = eventoService.findAll();
         } else {
-            eventoDTO = eventoService.findByNombre(nombre);
+            eventoDTO = eventoService.findByTitulo(nombre);
         }
         return new ResponseEntity<>(eventoDTO, HttpStatus.OK);
     }
@@ -64,31 +60,38 @@ public class EventosController {
 
     @Operation(summary = "Obtiene un evento por titulo")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Existe el username", content = @Content(schema = @Schema(implementation = Evento.class))),
-            @ApiResponse(responseCode = "404", description = "El username no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "200", description = "Existe el evento", content = @Content(schema = @Schema(implementation = Eventos.class))),
+            @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/eventos/username/{username}", produces = "application/json")
-    public ResponseEntity<Optional<EventosDTO>> getEventoByUsername(@PathVariable String username) {
-        Optional<EventosDTO> eventoDTO = eventoService.findByUsername(username);
+    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @GetMapping(value = "/eventos/titulo/{titulo}", produces = "application/json")
+    public ResponseEntity<Set<EventosDTO>> getEventoByTitulo(@PathVariable String username) {
+        Set<EventosDTO> eventoDTO = eventoService.findByTitulo(username);
         return new ResponseEntity<>(eventoDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Obtiene un evento por fecha y hora")
+    @Operation(summary = "Obtiene un evento por fecha")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Existe el username", content = @Content(schema = @Schema(implementation = Evento.class))),
+            @ApiResponse(responseCode = "200", description = "Existe el username", content = @Content(schema = @Schema(implementation = Eventos.class))),
             @ApiResponse(responseCode = "404", description = "El username no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/eventos/username/{username}", produces = "application/json")
-    public ResponseEntity<Optional<EventosDTO>> getEventoByUsername(@PathVariable String username) {
-        Optional<EventosDTO> eventoDTO = eventoService.findByUsername(username);
+    @PreAuthorize("hasRole('ADMIN_ROLE', 'USER_ROLE')")
+    @GetMapping(value = "/eventos/fecha/{fecha}", produces = "application/json")
+    public ResponseEntity<Set<EventosDTO>> getEventoByUsername(@PathVariable Date fecha) {
+        Set<EventosDTO> eventoDTO = eventoService.findByFecha(fecha);
         return new ResponseEntity<>(eventoDTO, HttpStatus.OK);
     }
+
+
+    //TODO
+    /*
+        eventoService.findByTipoEvento();
+        eventoService.findByLugar;
+     */
 
     @Operation(summary = "Registra un nuevo evento")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se registró el evento", content = @Content(schema = @Schema(implementation = Evento.class)))
+            @ApiResponse(responseCode = "200", description = "Se registró el evento", content = @Content(schema = @Schema(implementation = Eventos.class)))
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/eventos", produces = "application/json", consumes = "application/json")
@@ -100,7 +103,7 @@ public class EventosController {
 
     @Operation(summary = "Modifica los datos de un evento")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se modificó el evento", content = @Content(schema = @Schema(implementation = Evento.class))),
+            @ApiResponse(responseCode = "200", description = "Se modificó el evento", content = @Content(schema = @Schema(implementation = Eventos.class))),
             @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
