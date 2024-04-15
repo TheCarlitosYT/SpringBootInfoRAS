@@ -4,7 +4,6 @@ import example.domain.Documentos;
 import example.domain.Eventos;
 import example.dto.AsociacionDTO;
 import example.exception.AsociacionNotFoundException;
-import example.mapper.AsociacionMapper;
 import example.service.AsociacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -16,13 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static example.controller.Response.NOT_FOUND;
 
@@ -31,8 +28,6 @@ public class AsociacionController {
     @Autowired
     private AsociacionService asociacionService;
 
-    @Autowired
-    private AsociacionMapper asociacionMapper;
 
     @Operation(summary = "Obtiene el listado de asociaciones")
     @ApiResponses(value = {

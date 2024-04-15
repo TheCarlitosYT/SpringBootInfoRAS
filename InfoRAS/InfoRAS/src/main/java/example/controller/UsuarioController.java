@@ -6,7 +6,6 @@ import example.domain.Usuario;
 import example.domain.EstadoUsuario;
 import example.dto.UsuarioDTO;
 import example.exception.UsuarioNotFoundException;
-import example.mapper.UsuarioMapper;
 import example.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -30,9 +29,6 @@ import static example.controller.Response.NOT_FOUND;
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
-
-    @Autowired
-    private UsuarioMapper usuarioMapper;
 
     @Operation(summary = "Obtiene el listado de usuarios")
     @ApiResponses(value = {
