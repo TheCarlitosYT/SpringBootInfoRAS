@@ -81,8 +81,8 @@ public class EventosController {
             @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PreAuthorize("hasRole('ADMIN_ROLE')")
-    @GetMapping(value = "/eventos/username/{username}", produces = "application/json")
-    public ResponseEntity<Set<EventosDTO>> getEventoByUsername(@PathVariable Date fecha) {
+    @GetMapping(value = "/eventos/{fecha}", produces = "application/json")
+    public ResponseEntity<Set<EventosDTO>> getEventoByFecha(@PathVariable Date fecha) {
         Set<EventosDTO> eventoDTO = eventoService.findByFecha(fecha);
         return new ResponseEntity<>(eventoDTO, HttpStatus.OK);
     }
@@ -93,8 +93,8 @@ public class EventosController {
             @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PreAuthorize("hasRole('ADMIN_ROLE')")
-    @GetMapping(value = "/eventos/username/{username}", produces = "application/json")
-    public ResponseEntity<Set<EventosDTO>> getEventoBy(@PathVariable TipoEvento tipo) {
+    @GetMapping(value = "/eventos/tipo/{tipo}", produces = "application/json")
+    public ResponseEntity<Set<EventosDTO>> getEventoByTipo(@PathVariable TipoEvento tipo) {
         Set<EventosDTO> eventoDTO = eventoService.findByTipoEvento(tipo);
         return new ResponseEntity<>(eventoDTO, HttpStatus.OK);
     }
