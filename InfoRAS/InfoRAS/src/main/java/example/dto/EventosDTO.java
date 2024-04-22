@@ -8,8 +8,8 @@ public class EventosDTO {
     private Long id_eventos;
     private TipoEvento tipoEvento;
     private String titulo;
-    private String Descripcion;
-    private String Enlace;
+    private String descripcion;
+    private String enlace;
     private Date fecha;
     private String lugar;
 
