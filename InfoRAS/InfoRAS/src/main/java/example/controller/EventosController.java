@@ -81,7 +81,7 @@ public class EventosController {
             @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PreAuthorize("hasRole('ADMIN_ROLE')")
-    @GetMapping(value = "/eventos/{fecha}", produces = "application/json")
+    @GetMapping(value = "/eventos/fecha/{fecha}", produces = "application/json")
     public ResponseEntity<Set<EventosDTO>> getEventoByFecha(
             @PathVariable("fecha") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fecha) {
         try {

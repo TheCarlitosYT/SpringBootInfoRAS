@@ -1,10 +1,9 @@
 package example.controller;
 
 import example.domain.Documentos;
-import example.domain.TipoEvento;
+import example.domain.TipoDoc;
 import example.dto.DocumentosDTO;
-import example.exception.EventoNotFoundException;
-import example.mapper.DocumentoMapper;
+import example.exception.DocumentoNotFoundException;
 import example.service.DocumentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -18,8 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -31,15 +28,12 @@ public class DocumentosController {
     @Autowired
     private DocumentoService documentoService;
 
-    @Autowired
-    private DocumentoMapper documentoMapper;
-
     @Operation(summary = "Obtiene el listado de documentos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Listado de documentos",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Documentos.class)))),
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/documentos", produces = "application/json")
     public ResponseEntity<Set<DocumentosDTO>> getDocumentos(@RequestParam(value = "nombre", defaultValue = "") String nombre) {
         Set<DocumentosDTO> documentoDTO;
@@ -51,98 +45,86 @@ public class DocumentosController {
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Obtiene un evento determinado")
+    @Operation(summary = "Obtiene un documento determinado")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Existe el evento", content = @Content(schema = @Schema(implementation = Documentos.class))),
-            @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "200", description = "Existe el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
+            @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasAnyRole('ADMIN_ROLE', 'USER_ROLE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/documentos/{id}", produces = "application/json")
-    public ResponseEntity<Optional<DocumentosDTO>> getEventoById(@PathVariable long id) {
+    public ResponseEntity<Optional<DocumentosDTO>> getDocumentoById(@PathVariable long id) {
         Optional<DocumentosDTO> documentoDTO = documentoService.findById(id);
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 
 
-    @Operation(summary = "Obtiene un evento por titulo")
+    @Operation(summary = "Obtiene un documento por titulo")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Existe el username", content = @Content(schema = @Schema(implementation = Documentos.class))),
-            @ApiResponse(responseCode = "404", description = "El username no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "200", description = "Existe el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
+            @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/documentos/titulo/{titulo}", produces = "application/json")
-    public ResponseEntity<Set<DocumentosDTO>> getEventoByTitulo(@PathVariable String titulo) {
+    public ResponseEntity<Set<DocumentosDTO>> getDocumentoByTitulo(@PathVariable String titulo) {
         Set<DocumentosDTO> documentoDTO = documentoService.findByTitulo(titulo);
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Obtiene un evento por fecha y hora")
+    @Operation(summary = "Obtiene un documento por tipo")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Existe el evento", content = @Content(schema = @Schema(implementation = Documentos.class))),
-            @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "200", description = "Existe el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
+            @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
-    @GetMapping(value = "/documentos/username/{username}", produces = "application/json")
-    public ResponseEntity<Set<DocumentosDTO>> getEventoByUsername(@PathVariable Date fecha) {
-        Set<DocumentosDTO> documentoDTO = documentoService.findByFecha(fecha);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(value = "/documentos/documento/{documento}", produces = "application/json")
+    public ResponseEntity<Set<DocumentosDTO>> getDocumentoByTipo(@PathVariable TipoDoc tipo) {
+        Set<DocumentosDTO> documentoDTO = documentoService.findByTipoDocumento(tipo);
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Obtiene un evento por tipo")
+    @Operation(summary = "Registra un nuevo documento")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Existe el evento", content = @Content(schema = @Schema(implementation = Documentos.class))),
-            @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "200", description = "Se registró el documento", content = @Content(schema = @Schema(implementation = Documentos.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
-    @GetMapping(value = "/documentos/username/{username}", produces = "application/json")
-    public ResponseEntity<Set<DocumentosDTO>> getEventoBy(@PathVariable TipoEvento tipo) {
-        Set<DocumentosDTO> documentoDTO = documentoService.findByTipoEvento(tipo);
-        return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
-    }
-
-    @Operation(summary = "Registra un nuevo evento")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se registró el evento", content = @Content(schema = @Schema(implementation = Documentos.class)))
-    })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/documentos", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<DocumentosDTO> addEvento(@RequestBody DocumentosDTO documentoDTO) {
-        DocumentosDTO addedEventoDTO = documentoService.addEvento(documentoDTO);
-        return new ResponseEntity<>(addedEventoDTO, HttpStatus.OK);
+    public ResponseEntity<DocumentosDTO> addDocumento(@RequestBody DocumentosDTO documentoDTO) {
+        DocumentosDTO addedDocumentoDTO = documentoService.addDocumento(documentoDTO);
+        return new ResponseEntity<>(addedDocumentoDTO, HttpStatus.OK);
     }
 
 
-    @Operation(summary = "Modifica los datos de un evento")
+    @Operation(summary = "Modifica los datos de un documento")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se modificó el evento", content = @Content(schema = @Schema(implementation = Documentos.class))),
-            @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "200", description = "Se modificó el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
+            @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/documentos/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<DocumentosDTO> modifyEvento(@PathVariable long id, @RequestBody DocumentosDTO newEventoDTO) {
-        DocumentosDTO documentoDTO = documentoService.modifyEvento(id, newEventoDTO);
+    public ResponseEntity<DocumentosDTO> modifyDocumento(@PathVariable long id, @RequestBody DocumentosDTO newDocumentoDTO) {
+        DocumentosDTO documentoDTO = documentoService.modifyDocumento(id, newDocumentoDTO);
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Elimina un evento")
+    @Operation(summary = "Elimina un documento")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se eliminó el evento", content = @Content(schema = @Schema(implementation = Response.class))),
-            @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "200", description = "Se eliminó el documento", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/documentos/{id}", produces = "application/json")
-    public ResponseEntity<Response> deleteEvento(@PathVariable long id)
+    public ResponseEntity<Response> deleteDocumento(@PathVariable long id)
     {
-        documentoService.deleteEvento(id);
+        documentoService.deleteDocumento(id);
         return new ResponseEntity<>(Response.noErrorResponse(),
                 HttpStatus.OK);
     }
 
-    @ExceptionHandler(EventoNotFoundException.class)
+    @ExceptionHandler(DocumentoNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Response>
-    handleException(EventoNotFoundException cnfe) {
+    handleException(DocumentoNotFoundException cnfe) {
         Response response = Response.errorResonse(NOT_FOUND,
                 cnfe.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
