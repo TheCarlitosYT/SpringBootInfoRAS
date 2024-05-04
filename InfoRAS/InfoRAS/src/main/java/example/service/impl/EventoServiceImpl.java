@@ -12,7 +12,7 @@ import example.repository.DocumentoRepository;
 import example.repository.EventoRepository;
 import example.repository.UsuarioRepository;
 import example.service.EventoService;
-import org.jvnet.hk2.annotations.Service;
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 

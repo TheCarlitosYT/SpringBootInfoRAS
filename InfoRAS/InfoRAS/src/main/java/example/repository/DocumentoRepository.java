@@ -17,7 +17,7 @@ public interface DocumentoRepository extends CrudRepository<Documentos, Long> {
 
     Set<Documentos> findByTitulo(String titulo);
 
-    Set<Documentos> findByTipoDocumento(TipoDoc tipoDoc);
+    Set<Documentos> findByTipoDocumentacion(TipoDoc tipoDoc);
 
     Set<Documentos> findByDescripcion(String descripcion);
 

@@ -102,6 +102,7 @@ public class AuthUserController {
 
                         break;
                     default:
+                        System.out.println(role + " ");
                         Role usuarioRole = roleRepository.findByName(UserRoles.USER_ROLE)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(usuarioRole);

@@ -12,9 +12,9 @@ import java.util.Set;
 public interface AsociacionRepository extends CrudRepository<Asociacion, Long> {
     Set<Asociacion> findAll();
     Optional<Asociacion> findById(long id);
-    Set<Asociacion> findByTitulo(String titulo);
+    Set<Asociacion> findByNombre(String nombre);
     Set<Asociacion> findByDescripcion(String descripcion);
 
-    @Query(value = "SELECT id_asociacion, titulo, descripcion FROM asociacion a WHERE a.titulo LIKE :titulo", nativeQuery = true)
-    Set<Asociacion> findAsociacionByTitulo(String titulo);
+    @Query(value = "SELECT id_asociacion, nombre, descripcion FROM asociacion a WHERE a.nombre LIKE :nombre", nativeQuery = true)
+    Set<Asociacion> findAsociacionByNombre(String nombre);
 }

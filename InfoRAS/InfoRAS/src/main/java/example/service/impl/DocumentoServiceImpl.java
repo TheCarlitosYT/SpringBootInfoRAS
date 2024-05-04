@@ -11,7 +11,7 @@ import example.repository.AsociacionRepository;
 import example.repository.DocumentoRepository;
 import example.repository.UsuarioRepository;
 import example.service.DocumentoService;
-import org.jvnet.hk2.annotations.Service;
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 
@@ -52,8 +52,8 @@ public class DocumentoServiceImpl implements DocumentoService {
     }
 
     @Override
-    public Set<DocumentosDTO> findByTipoDocumento(TipoDoc tipoDoc) {
-        Set<Documentos> documentos = documentoRepository.findByTipoDocumento(tipoDoc);
+    public Set<DocumentosDTO> findByTipoDocumentacion(TipoDoc tipoDoc) {
+        Set<Documentos> documentos = documentoRepository.findByTipoDocumentacion(tipoDoc);
         return documentos.stream().map(documentoMapper::toDTO).collect(Collectors.toSet());
     }
 

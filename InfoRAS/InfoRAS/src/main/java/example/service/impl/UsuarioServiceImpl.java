@@ -4,8 +4,6 @@ import example.domain.Documentos;
 import example.domain.Eventos;
 import example.domain.Usuario;
 import example.domain.EstadoUsuario;
-import example.dto.DocumentosDTO;
-import example.dto.EventosDTO;
 import example.dto.UsuarioDTO;
 import example.exception.UsuarioNotFoundException;
 import example.mapper.UsuarioMapper;

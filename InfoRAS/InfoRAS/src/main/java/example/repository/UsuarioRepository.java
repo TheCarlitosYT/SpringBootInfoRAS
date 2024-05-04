@@ -31,10 +31,10 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
     @Query(value = "SELECT id_usuario,password,username,nombre,apellidos FROM usuarios c WHERE c.nombre LIKE :nombre AND c.apellidos LIKE :apellidos", nativeQuery = true)
     Set<Usuario> findUsuarioByNombreAndApellidos(String nombre, String apellidos);
 
-    @Query("SELECT i FROM Documento i WHERE i.usuario.id_usuario = :usuarioId")
+    @Query("SELECT i FROM Documentos i WHERE i.usuario.id_usuario = :usuarioId")
     List<Documentos> findDocumentosByUsuarioId(@Param("usuarioId") Long usuarioId);
 
     @Query("SELECT f FROM Eventos f WHERE f.usuario.id_usuario = :usuarioId")
-    List<Eventos> findEventosByIdUsuario(@Param("usuarioId") Long idUsuario);
+    List<Eventos> findEventosByUsuarioId(@Param("usuarioId") Long idUsuario);
 
 }

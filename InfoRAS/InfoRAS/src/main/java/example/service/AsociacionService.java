@@ -5,17 +5,19 @@ import example.domain.Documentos;
 import example.domain.Eventos;
 import example.dto.AsociacionDTO;
 import jakarta.validation.Valid;
+import org.jvnet.hk2.annotations.Service;
 
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Service
 public interface AsociacionService {
 
     Optional<AsociacionDTO> findById(long id);
     Set<AsociacionDTO> findAll();
-    Set<AsociacionDTO> findByTitulo(String titulo);
+    Set<AsociacionDTO> findByNombre(String nombre);
     List<Documentos> findDocumentosByAsociacionId(Long id);
     List<Eventos> findEventosByAsociacionId(Long id);
 

@@ -29,6 +29,7 @@ public class AsociacionController {
     private AsociacionService asociacionService;
 
 
+
     @Operation(summary = "Obtiene el listado de asociaciones")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Listado de asociaciones",
@@ -36,12 +37,12 @@ public class AsociacionController {
     })
     @PreAuthorize("hasAnyRole('ADMIN_ROLE', 'USER_ROLE')")
     @GetMapping(value = "/asociaciones", produces = "application/json")
-    public ResponseEntity<Set<AsociacionDTO>> getAsociacion(@RequestParam(value = "titulo", defaultValue = "") String titulo) {
+    public ResponseEntity<Set<AsociacionDTO>> getAsociacion(@RequestParam(value = "titulo", defaultValue = "") String nombre) {
         Set<AsociacionDTO> asociacionDTO;
-        if (titulo.isEmpty()) {
+        if (nombre.isEmpty()) {
             asociacionDTO = asociacionService.findAll();
         } else {
-            asociacionDTO = asociacionService.findByTitulo(titulo);
+            asociacionDTO = asociacionService.findByNombre(nombre);
         }
         return new ResponseEntity<>(asociacionDTO, HttpStatus.OK);
     }
@@ -78,7 +79,7 @@ public class AsociacionController {
     })
     @PreAuthorize("hasAnyRole('ADMIN_ROLE', 'USER_ROLE')")
     @GetMapping(value = "/asociaciones/{id}/eventos", produces = "application/json")
-    public ResponseEntity<List<Eventos>> getEventoByAsociacionId(@PathVariable Long id) {
+    public ResponseEntity<List<Eventos>> getEventosByAsociacionId(@PathVariable Long id) {
         List<Eventos> eventos = asociacionService.findEventosByAsociacionId(id);
         return new ResponseEntity<>(eventos, HttpStatus.OK);
     }
@@ -89,9 +90,9 @@ public class AsociacionController {
             @ApiResponse(responseCode = "404", description = "El username no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PreAuthorize("hasRole('ADMIN_ROLE', 'USER_ROLE')")
-    @GetMapping(value = "/asociaciones/nombre/{titulo}", produces = "application/json")
-    public ResponseEntity<Set<AsociacionDTO>> getAsociacionByTitulo(@PathVariable String titulo) {
-        Set<AsociacionDTO> asociacionDTO = asociacionService.findByTitulo(titulo);
+    @GetMapping(value = "/asociaciones/nombre/{nombre}", produces = "application/json")
+    public ResponseEntity<Set<AsociacionDTO>> getAsociacionByTitulo(@PathVariable String nombre) {
+        Set<AsociacionDTO> asociacionDTO = asociacionService.findByNombre(nombre);
         return new ResponseEntity<>(asociacionDTO, HttpStatus.OK);
     }
     //TODO

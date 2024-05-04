@@ -77,8 +77,8 @@ public class DocumentosController {
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/documentos/documento/{documento}", produces = "application/json")
-    public ResponseEntity<Set<DocumentosDTO>> getDocumentoByTipo(@PathVariable TipoDoc tipo) {
-        Set<DocumentosDTO> documentoDTO = documentoService.findByTipoDocumento(tipo);
+    public ResponseEntity<Set<DocumentosDTO>> getDocumentoByTipoDocumentacion(@PathVariable TipoDoc tipo) {
+        Set<DocumentosDTO> documentoDTO = documentoService.findByTipoDocumentacion(tipo);
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 

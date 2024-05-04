@@ -9,8 +9,9 @@ import example.exception.AsociacionNotFoundException;
 import example.mapper.AsociacionMapper;
 import example.repository.AsociacionRepository;
 import example.service.AsociacionService;
-import org.jvnet.hk2.annotations.Service;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -42,8 +43,8 @@ public class AsociacionServiceImpl implements AsociacionService {
     }
 
     @Override
-    public Set<AsociacionDTO> findByTitulo(String titulo) {
-        Set<Asociacion> cliente = asociacionRepository.findByTitulo(titulo);
+    public Set<AsociacionDTO> findByNombre(String nombre) {
+        Set<Asociacion> cliente = asociacionRepository.findByNombre(nombre);
         return cliente.stream().map(asociacionMapper::toDTO).collect(Collectors.toSet());
     }
 
