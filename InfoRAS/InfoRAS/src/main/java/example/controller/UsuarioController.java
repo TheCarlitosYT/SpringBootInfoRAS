@@ -35,7 +35,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "200", description = "Listado de usuarios",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))),
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    
     @GetMapping(value = "/usuarios", produces = "application/json")
     public ResponseEntity<Set<UsuarioDTO>> getUsuarios(@RequestParam(value = "nombre", defaultValue = "") String nombre) {
         Set<UsuarioDTO> usuarioDTO;

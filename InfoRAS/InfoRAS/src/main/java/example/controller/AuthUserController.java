@@ -4,8 +4,7 @@ import example.domain.*;
 import example.payload.request.*;
 import example.payload.response.JwtResponse;
 import example.payload.response.MessageResponse;
-import example.repository.RoleRepository;
-import example.repository.UsuarioRepository;
+import example.repository.*;
 import example.security.jwt.JwtUtils;
 import example.security.services.UsuarioDetailsImpl;
 import jakarta.validation.Valid;
@@ -35,6 +34,16 @@ public class AuthUserController {
     
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    DocumentoRepository documentoRepository;
+
+    @Autowired
+    EventoRepository eventoRepository;
+
+    @Autowired
+    AsociacionRepository asociacionRepository;
+
     @Autowired
     PasswordEncoder encoder;
     @Autowired
@@ -56,7 +65,7 @@ public class AuthUserController {
 
         UsuarioDetailsImpl usuarioDetails = (UsuarioDetailsImpl) authentication.getPrincipal();
         List<String> roles = usuarioDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority) //.map(item -> item.getAuthority())
+                /*.map(GrantedAuthority::getAuthority)*/ .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
@@ -89,21 +98,21 @@ public class AuthUserController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role usuarioRole = roleRepository.findByName(UserRoles.ADMIN_ROLE)
+            Role usuarioRole = roleRepository.findByName(UserRoles.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(usuarioRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(UserRoles.ADMIN_ROLE)
+                        Role adminRole = roleRepository.findByName(UserRoles.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
-
+                        System.out.println("Este usuario será admin");
                         break;
                     default:
-                        System.out.println(role + " ");
-                        Role usuarioRole = roleRepository.findByName(UserRoles.USER_ROLE)
+                        System.out.println(role + " usuario??");
+                        Role usuarioRole = roleRepository.findByName(UserRoles.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(usuarioRole);
                 }

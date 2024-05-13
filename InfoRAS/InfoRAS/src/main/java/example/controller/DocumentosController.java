@@ -4,6 +4,7 @@ import example.domain.Documentos;
 import example.domain.TipoDoc;
 import example.dto.DocumentosDTO;
 import example.exception.DocumentoNotFoundException;
+import example.mapper.DocumentoMapper;
 import example.service.DocumentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -28,12 +29,15 @@ public class DocumentosController {
     @Autowired
     private DocumentoService documentoService;
 
+    @Autowired
+    private DocumentoMapper documentoMapper;
+
     @Operation(summary = "Obtiene el listado de documentos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Listado de documentos",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Documentos.class)))),
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/documentos", produces = "application/json")
     public ResponseEntity<Set<DocumentosDTO>> getDocumentos(@RequestParam(value = "nombre", defaultValue = "") String nombre) {
         Set<DocumentosDTO> documentoDTO;

@@ -7,7 +7,9 @@ import java.util.Set;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name="Usuario")
@@ -48,6 +50,10 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "evento_id")
@@ -120,11 +126,6 @@ public class Usuario {
     public Set<Role> getRoles() {
         return roles;
     }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public List<Eventos> getEventos() {
         return eventos;
     }
@@ -140,6 +141,7 @@ public class Usuario {
     public void setDocumentos(List<Documentos> documentos) {
         this.documentos = documentos;
     }
+
 
     @Override
     public String toString() {

@@ -35,7 +35,7 @@ public class AsociacionController {
             @ApiResponse(responseCode = "200", description = "Listado de asociaciones",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Asociacion.class)))),
     })
-    @PreAuthorize("hasAnyRole('ADMIN_ROLE', 'USER_ROLE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/asociaciones", produces = "application/json")
     public ResponseEntity<Set<AsociacionDTO>> getAsociacion(@RequestParam(value = "titulo", defaultValue = "") String nombre) {
         Set<AsociacionDTO> asociacionDTO;
@@ -53,7 +53,7 @@ public class AsociacionController {
             @ApiResponse(responseCode = "200", description = "Existe la asociacion", content = @Content(schema = @Schema(implementation = Asociacion.class))),
             @ApiResponse(responseCode = "404", description = "La asociacion no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasAnyRole('ADMIN_ROLE', 'USER_ROLE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/asociaciones/{id}", produces = "application/json")
     public ResponseEntity<Optional<AsociacionDTO>> getAsociacionById(@PathVariable long id) {
         Optional<AsociacionDTO> asociacionDTO = asociacionService.findById(id);
@@ -65,7 +65,7 @@ public class AsociacionController {
             @ApiResponse(responseCode = "200", description = "Se obtuvieron los documentos de la asociacion", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Documentos.class)))),
             @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasAnyRole('ADMIN_ROLE', 'USER_ROLE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/asociaciones/{id}/documentos", produces = "application/json")
     public ResponseEntity<List<Documentos>> getDocumentosByAsociacionId(@PathVariable Long id) {
         List<Documentos> documentos = asociacionService.findDocumentosByAsociacionId(id);
@@ -77,7 +77,7 @@ public class AsociacionController {
             @ApiResponse(responseCode = "200", description = "Se obtuvieron los eventos de la asociacion", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Eventos.class)))),
             @ApiResponse(responseCode = "404", description = "El evento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasAnyRole('ADMIN_ROLE', 'USER_ROLE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/asociaciones/{id}/eventos", produces = "application/json")
     public ResponseEntity<List<Eventos>> getEventosByAsociacionId(@PathVariable Long id) {
         List<Eventos> eventos = asociacionService.findEventosByAsociacionId(id);
@@ -89,7 +89,7 @@ public class AsociacionController {
             @ApiResponse(responseCode = "200", description = "Existe el username", content = @Content(schema = @Schema(implementation = Asociacion.class))),
             @ApiResponse(responseCode = "404", description = "El username no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE', 'USER_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/asociaciones/nombre/{nombre}", produces = "application/json")
     public ResponseEntity<Set<AsociacionDTO>> getAsociacionByTitulo(@PathVariable String nombre) {
         Set<AsociacionDTO> asociacionDTO = asociacionService.findByNombre(nombre);
@@ -100,7 +100,7 @@ public class AsociacionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se registró la asociacion", content = @Content(schema = @Schema(implementation = Asociacion.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/asociaciones", produces = "application/json", consumes = "application/json")
     public ResponseEntity<AsociacionDTO> addAsociacion(@RequestBody AsociacionDTO asociacionDTO) {
         AsociacionDTO addedAsociacionDTO = asociacionService.addAsociacion(asociacionDTO);
@@ -112,7 +112,7 @@ public class AsociacionController {
             @ApiResponse(responseCode = "200", description = "Se modificó la asociacion", content = @Content(schema = @Schema(implementation = Asociacion.class))),
             @ApiResponse(responseCode = "404", description = "La asociacion no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/asociaciones/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<AsociacionDTO> modifyAsociacion(@PathVariable long id, @RequestBody AsociacionDTO newAsociacionDTO) {
         AsociacionDTO asociacionDTO = asociacionService.modifyAsociacion(id, newAsociacionDTO);
@@ -124,7 +124,7 @@ public class AsociacionController {
             @ApiResponse(responseCode = "200", description = "Se eliminó la asociacion", content = @Content(schema = @Schema(implementation = Response.class))),
             @ApiResponse(responseCode = "404", description = "La asociacion no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/asociaciones/{id}", produces = "application/json")
     public ResponseEntity<Response> deleteAsociacion(@PathVariable long id)
     {
