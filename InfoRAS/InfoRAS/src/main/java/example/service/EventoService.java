@@ -5,19 +5,19 @@ import example.dto.EventosDTO;
 import jakarta.validation.Valid;
 import org.jvnet.hk2.annotations.Service;
 
-
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
 public interface EventoService {
-    Set<EventosDTO> findAll();
     Optional<EventosDTO> findById(long id_eventos);
+
+    Set<EventosDTO> findAll();
+
     Set<EventosDTO> findByTipoEvento(TipoEvento tipoEvento);
 
     Set<EventosDTO> findByTitulo(String titulo);
-
 
     Set<EventosDTO> findByFecha(Date fecha);
 

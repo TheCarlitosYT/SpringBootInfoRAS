@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -17,31 +18,30 @@ public class Eventos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_eventos")
     private Long id_eventos;
-
-    @Schema(description = "Estado del post", example = "Noonan_General", required = false)
-    @Column(name = "tipo")
-    private TipoEvento tipoEvento;
-    @Schema(description = "Titulo del documento", example = "La nueva medicina...", required = true)
+    @Schema(description = "Titulo del evento", example = "Presentación de una nueva hormona", required = true)
     @NotBlank
     @Column(name = "titulo")
     private String titulo;
+    @Schema(description = "Estado del evento", example = "Noonan_General", required = false)
+    @Column(name = "tipo")
+    private TipoEvento tipoEvento;
 
-    @Schema(description = "Enlace de la documentación", example = "https://example.com.", required = true)
+    @Schema(description = "Enlace del evento", example = "https://example.com.", required = false)
     @NotBlank
     @Column(name = "Enlace")
     private String enlace;
 
-    @Schema(description = "Descripción del post (opcional)", example = "Esta es una descripción", required = false)
+    @Schema(description = "Descripción del evento (opcional)", example = "Esta es una descripción", required = false)
     @Column(name = "Descripcion")
     private String descripcion;
 
-    @Schema(description = "Nombre de la asociación", example = "FEDERAS", required = true)
+    @Schema(description = "Fecha del evento", example = "2024-05-05T12:00:00", required = true)
     @JsonFormat(pattern="dd-MM-yyyy")
-    @NotBlank
+    @NotNull
     @Column(name = "fecha")
     private Date fecha;
 
-    @Schema(description = "Descripcion de la asociacion", example = "ACTIVO", required = false)
+    @Schema(description = "Lugar donde se celebrará el evento, puedes poner lo que sea", example = "ACTIVO", required = false)
     @Column(name = "lugar")
     private String lugar;
 

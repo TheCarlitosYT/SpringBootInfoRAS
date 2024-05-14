@@ -6,9 +6,7 @@ import example.domain.TipoEvento;
 import example.dto.EventosDTO;
 import example.exception.DocumentoNotFoundException;
 import example.exception.EventoNotFoundException;
-import example.mapper.DocumentoMapper;
 import example.mapper.EventoMapper;
-import example.repository.DocumentoRepository;
 import example.repository.EventoRepository;
 import example.repository.UsuarioRepository;
 import example.service.EventoService;
@@ -37,7 +35,8 @@ public class EventoServiceImpl implements EventoService {
 
     @Override
     public Set<EventosDTO> findAll() {
-        return null;
+        Set<Eventos> eventos = eventoRepository.findAll();
+        return eventos.stream().map(eventoMapper::toDTO).collect(Collectors.toSet());
     }
 
     @Override

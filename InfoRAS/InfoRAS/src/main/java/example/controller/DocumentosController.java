@@ -22,8 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static example.controller.Response.NOT_FOUND;
-//TODO Esto es documentos, debo cambiarlo.
-//TODO PORFA HACER ESTO YA :D
+
 @RestController
 public class DocumentosController {
     @Autowired
@@ -32,6 +31,7 @@ public class DocumentosController {
     @Autowired
     private DocumentoMapper documentoMapper;
 
+
     @Operation(summary = "Obtiene el listado de documentos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Listado de documentos",
@@ -39,13 +39,15 @@ public class DocumentosController {
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/documentos", produces = "application/json")
-    public ResponseEntity<Set<DocumentosDTO>> getDocumentos(@RequestParam(value = "nombre", defaultValue = "") String nombre) {
+    public ResponseEntity<Set<DocumentosDTO>> getDocumentos(
+            @RequestParam(value = "nombre", defaultValue = "") String nombre) {
         Set<DocumentosDTO> documentoDTO;
         if (nombre.isEmpty()) {
             documentoDTO = documentoService.findAll();
         } else {
             documentoDTO = documentoService.findByTitulo(nombre);
         }
+        System.out.println(documentoDTO);
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 

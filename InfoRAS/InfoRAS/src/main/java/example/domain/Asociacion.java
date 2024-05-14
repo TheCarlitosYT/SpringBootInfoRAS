@@ -8,7 +8,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Asociacion")
@@ -21,7 +21,7 @@ public class Asociacion {
     private Long id_asociacion;
 
     @Schema(description = "Nombre de la asociación", example = "FEDERAS", required = true)
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "nombre")
     private EnumAsociaciones nombre;

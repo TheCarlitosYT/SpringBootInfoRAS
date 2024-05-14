@@ -20,32 +20,37 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import static example.controller.Response.NOT_FOUND;
 
-//TODO
 @RestController
 public class EventosController {
     @Autowired
     private EventoService eventoService;
 
+    @Autowired
+    private EventoMapper eventoMapper;
+
+
     @Operation(summary = "Obtiene el listado de eventos")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Listado de eventos", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Eventos.class)))),
+            @ApiResponse(responseCode = "200", description = "Listado de eventos",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Eventos.class)))),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/eventos", produces = "application/json")
     public ResponseEntity<Set<EventosDTO>> getEventos(
-            @RequestParam(value = "nombre", defaultValue = "") String nombre) {
+            @RequestParam(value = "titulo", defaultValue = "") String titulo) {
         Set<EventosDTO> eventoDTO;
-        if (nombre.isEmpty()) {
+        if (titulo.isEmpty()) {
             eventoDTO = eventoService.findAll();
         } else {
-            eventoDTO = eventoService.findByTitulo(nombre);
+            eventoDTO = eventoService.findByTitulo(titulo);
         }
+        //Esto devuelve nulo cuando no debería.
+        System.out.println(eventoDTO);
         return new ResponseEntity<>(eventoDTO, HttpStatus.OK);
     }
 

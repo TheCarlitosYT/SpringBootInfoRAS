@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class EventosDTO {
     private Long id_eventos;
-    private TipoEvento tipoEvento;
     private String titulo;
+    private TipoEvento tipoEvento;
     private String descripcion;
     private String enlace;
     private Date fecha;
