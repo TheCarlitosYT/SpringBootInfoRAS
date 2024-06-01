@@ -3,8 +3,10 @@ package example.service.impl;
 import example.domain.Asociacion;
 import example.domain.Documentos;
 import example.domain.TipoDoc;
+import example.domain.Usuario;
 import example.dto.DocumentosDTO;
 import example.exception.DocumentoNotFoundException;
+import example.exception.EventoNotFoundException;
 import example.mapper.AsociacionMapper;
 import example.mapper.DocumentoMapper;
 import example.repository.AsociacionRepository;
@@ -60,6 +62,11 @@ public class DocumentoServiceImpl implements DocumentoService {
     @Override
     public DocumentosDTO addDocumento(DocumentosDTO documentosDTO) {
         Documentos documentos = documentoMapper.toEntity(documentosDTO);
+
+        Usuario usuario = usuarioRepository.findById(documentosDTO.getId_usuario())
+                .orElseThrow(() -> new EventoNotFoundException(documentosDTO.getId_usuario()));
+        documentos.setUsuario(usuario);
+
         documentos = documentoRepository.save(documentos);
         return documentoMapper.toDTO(documentos);
     }
@@ -69,6 +76,10 @@ public class DocumentoServiceImpl implements DocumentoService {
         Documentos documentos = documentoRepository.findById(id_Documento).orElseThrow(() -> new DocumentoNotFoundException(id_Documento));
 
         Documentos newDocumentos = documentoMapper.toEntity(newDocumentosDTO);
+
+        Usuario usuario = usuarioRepository.findById(newDocumentosDTO.getId_usuario())
+                .orElseThrow(() -> new EventoNotFoundException(newDocumentosDTO.getId_usuario()));
+        documentos.setUsuario(usuario);
 
         newDocumentos.setId_documento(documentos.getId_documento());
         documentos = documentoRepository.save(newDocumentos);

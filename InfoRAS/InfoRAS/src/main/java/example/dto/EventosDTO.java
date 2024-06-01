@@ -3,6 +3,7 @@ package example.dto;
 import example.domain.TipoEvento;
 import java.util.Date;
 import lombok.Data;
+
 @Data
 public class EventosDTO {
     private Long id_eventos;
@@ -12,7 +13,7 @@ public class EventosDTO {
     private String enlace;
     private Date fecha;
     private String lugar;
-    private int id_usuario;
-    private int id_asociacion;
+    private Long id_usuario;
+    private Long id_asociacion;
 
 }

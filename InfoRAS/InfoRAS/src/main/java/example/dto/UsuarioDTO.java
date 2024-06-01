@@ -2,8 +2,10 @@ package example.dto;
 
 import example.domain.EstadoUsuario;
 import lombok.Data;
+
 @Data
 public class UsuarioDTO {
+
     private Long id_usuario;
     private EstadoUsuario estado;
     private String username;

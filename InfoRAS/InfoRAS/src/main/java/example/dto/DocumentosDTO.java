@@ -9,7 +9,7 @@ public class DocumentosDTO {
     private String titulo;
     private String Descripcion;
     private String Enlace;
-    private int id_usuario;
-    private int id_asociacion;
+    private Long id_usuario;
+    private Long id_asociacion;
 
 }

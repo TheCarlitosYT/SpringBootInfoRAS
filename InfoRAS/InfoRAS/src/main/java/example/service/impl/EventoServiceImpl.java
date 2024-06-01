@@ -2,6 +2,7 @@ package example.service.impl;
 
 import example.domain.Eventos;
 import example.domain.TipoEvento;
+import example.domain.Usuario;
 import example.dto.EventosDTO;
 import example.exception.DocumentoNotFoundException;
 import example.exception.EventoNotFoundException;
@@ -71,6 +72,11 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public EventosDTO addEvento(EventosDTO eventosDTO) {
         Eventos eventos = eventoMapper.toEntity(eventosDTO);
+
+        Usuario usuario = usuarioRepository.findById(eventosDTO.getId_usuario())
+                .orElseThrow(() -> new EventoNotFoundException(eventosDTO.getId_usuario()));
+        eventos.setUsuario(usuario);
+
         eventos = eventoRepository.save(eventos);
         return eventoMapper.toDTO(eventos);
     }
@@ -80,6 +86,9 @@ public class EventoServiceImpl implements EventoService {
         Eventos eventos = eventoRepository.findById(id_Eventos).orElseThrow(() -> new EventoNotFoundException(id_Eventos));
 
         Eventos newCliente = eventoMapper.toEntity(newEventosDTO);
+        Usuario usuario = usuarioRepository.findById(newEventosDTO.getId_usuario())
+                .orElseThrow(() -> new EventoNotFoundException(newEventosDTO.getId_usuario()));
+        eventos.setUsuario(usuario);
 
         newCliente.setId_eventos(eventos.getId_eventos());
         eventos = eventoRepository.save(newCliente);

@@ -10,11 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class DocumentoMapper {
     @Autowired
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public DocumentosDTO toDTO(Documentos documentos) {
-        return modelMapper.map(documentos, DocumentosDTO.class);
-    }
+        DocumentosDTO documentosDTO = modelMapper.map(documentos, DocumentosDTO.class);
+        documentosDTO.setId_usuario(documentos.getUsuario().getId_usuario());
+        return documentosDTO;    }
 
     public Documentos toEntity(DocumentosDTO documentosDTO) {
         return modelMapper.map(documentosDTO, Documentos.class);

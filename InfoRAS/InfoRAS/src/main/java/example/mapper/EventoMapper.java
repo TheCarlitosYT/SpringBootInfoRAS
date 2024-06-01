@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class EventoMapper {
     @Autowired
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public EventosDTO toDTO(Eventos eventos) {
-        return modelMapper.map(eventos, EventosDTO.class);
+        EventosDTO eventosDTO = modelMapper.map(eventos, EventosDTO.class);
+        eventosDTO.setId_usuario(eventos.getUsuario().getId_usuario());
+        return eventosDTO;
     }
 
     public Eventos toEntity(EventosDTO eventosDTO) {
