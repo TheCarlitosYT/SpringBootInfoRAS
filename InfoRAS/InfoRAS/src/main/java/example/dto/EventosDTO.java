@@ -12,5 +12,7 @@ public class EventosDTO {
     private String enlace;
     private Date fecha;
     private String lugar;
+    private int usuario_id;
+    private int asociacion_id;
 
 }

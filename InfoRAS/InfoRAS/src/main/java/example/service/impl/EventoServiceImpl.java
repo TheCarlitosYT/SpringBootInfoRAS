@@ -1,7 +1,6 @@
 package example.service.impl;
 
 import example.domain.Eventos;
-import example.domain.Eventos;
 import example.domain.TipoEvento;
 import example.dto.EventosDTO;
 import example.exception.DocumentoNotFoundException;
