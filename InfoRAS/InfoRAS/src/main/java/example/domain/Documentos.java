@@ -119,6 +119,7 @@ public class Documentos {
                 ", titulo='" + titulo + '\'' +
                 ", enlace='" + enlace + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", id_usuario='" + usuario.getId_usuario() + '\'' +
                 '}';
     }
 }

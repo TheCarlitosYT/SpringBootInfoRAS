@@ -7,6 +7,7 @@ import example.payload.response.MessageResponse;
 import example.repository.*;
 import example.security.jwt.JwtUtils;
 import example.security.services.UsuarioDetailsImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -124,6 +125,12 @@ public class AuthUserController {
         usuarioRepository.save(usuario);
 
         return ResponseEntity.ok(usuario);
+    }
+
+    @PostMapping("/signout")
+    public ResponseEntity<?> signoutUsuario(HttpServletRequest request) {
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok(new MessageResponse("Logout successful"));
     }
 
 }

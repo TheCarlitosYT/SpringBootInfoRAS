@@ -51,7 +51,7 @@ public class DocumentosController {
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Obtiene un documento determinado")
+    @Operation(summary = "Obtiene un documento determinado log")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Existe el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
             @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
@@ -69,7 +69,7 @@ public class DocumentosController {
             @ApiResponse(responseCode = "200", description = "Existe el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
             @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/documentos/titulo/{titulo}", produces = "application/json")
     public ResponseEntity<Set<DocumentosDTO>> getDocumentoByTitulo(@PathVariable String titulo) {
         Set<DocumentosDTO> documentoDTO = documentoService.findByTitulo(titulo);
@@ -81,7 +81,7 @@ public class DocumentosController {
             @ApiResponse(responseCode = "200", description = "Existe el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
             @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/documentos/documento/{documento}", produces = "application/json")
     public ResponseEntity<Set<DocumentosDTO>> getDocumentoByTipoDocumentacion(@PathVariable TipoDoc tipo) {
         Set<DocumentosDTO> documentoDTO = documentoService.findByTipoDocumentacion(tipo);
@@ -92,7 +92,7 @@ public class DocumentosController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se registró el documento", content = @Content(schema = @Schema(implementation = Documentos.class)))
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping(value = "/documentos", produces = "application/json", consumes = "application/json")
     public ResponseEntity<DocumentosDTO> addDocumento(@RequestBody DocumentosDTO documentoDTO) {
         DocumentosDTO addedDocumentoDTO = documentoService.addDocumento(documentoDTO);
@@ -105,7 +105,7 @@ public class DocumentosController {
             @ApiResponse(responseCode = "200", description = "Se modificó el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
             @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping(value = "/documentos/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<DocumentosDTO> modifyDocumento(@PathVariable long id, @RequestBody DocumentosDTO newDocumentoDTO) {
         DocumentosDTO documentoDTO = documentoService.modifyDocumento(id, newDocumentoDTO);
@@ -117,7 +117,7 @@ public class DocumentosController {
             @ApiResponse(responseCode = "200", description = "Se eliminó el documento", content = @Content(schema = @Schema(implementation = Response.class))),
             @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping(value = "/documentos/{id}", produces = "application/json")
     public ResponseEntity<Response> deleteDocumento(@PathVariable long id)
     {

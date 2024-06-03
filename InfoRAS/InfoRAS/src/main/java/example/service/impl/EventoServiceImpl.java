@@ -85,13 +85,13 @@ public class EventoServiceImpl implements EventoService {
     public EventosDTO modifyEvento(long id_Eventos, EventosDTO newEventosDTO) {
         Eventos eventos = eventoRepository.findById(id_Eventos).orElseThrow(() -> new EventoNotFoundException(id_Eventos));
 
-        Eventos newCliente = eventoMapper.toEntity(newEventosDTO);
+        Eventos newEventos = eventoMapper.toEntity(newEventosDTO);
         Usuario usuario = usuarioRepository.findById(newEventosDTO.getId_usuario())
                 .orElseThrow(() -> new EventoNotFoundException(newEventosDTO.getId_usuario()));
-        eventos.setUsuario(usuario);
+        newEventos.setUsuario(usuario);
 
-        newCliente.setId_eventos(eventos.getId_eventos());
-        eventos = eventoRepository.save(newCliente);
+        newEventos.setId_eventos(eventos.getId_eventos());
+        eventos = eventoRepository.save(newEventos);
 
         return eventoMapper.toDTO(eventos);
     }
