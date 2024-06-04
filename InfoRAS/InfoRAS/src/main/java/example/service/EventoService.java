@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Service
 public interface EventoService {
-    Optional<EventosDTO> findById(long id_eventos);
+    Optional<EventosDTO> findById(long id_eventosDTO);
 
     Set<EventosDTO> findAll();
 

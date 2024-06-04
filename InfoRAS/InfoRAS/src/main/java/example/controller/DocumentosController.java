@@ -51,7 +51,7 @@ public class DocumentosController {
         return new ResponseEntity<>(documentoDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Obtiene un documento determinado log")
+    @Operation(summary = "Obtiene un documento determinado")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Existe el documento", content = @Content(schema = @Schema(implementation = Documentos.class))),
             @ApiResponse(responseCode = "404", description = "El documento no existe", content = @Content(schema = @Schema(implementation = Response.class)))

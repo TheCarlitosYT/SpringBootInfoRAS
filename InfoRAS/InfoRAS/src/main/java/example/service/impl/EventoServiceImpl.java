@@ -41,8 +41,8 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public Optional<EventosDTO> findById(long id_eventos) {
-        Optional<Eventos> eventos = eventoRepository.findById(id_eventos);
+    public Optional<EventosDTO> findById(long id_eventosDTO) {
+        Optional<Eventos> eventos = eventoRepository.findById(id_eventosDTO);
         return eventos.map(eventoMapper::toDTO);
     }
 
