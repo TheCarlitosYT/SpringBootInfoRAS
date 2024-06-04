@@ -22,9 +22,14 @@ public class Eventos {
     @NotBlank
     @Column(name = "titulo")
     private String titulo;
+
     @Schema(description = "Estado del evento", example = "Noonan_General", required = false)
     @Column(name = "tipo")
     private TipoEvento tipoEvento;
+
+    @Schema(description = "Formato del evento", example = "PRESENCIAL", required = false)
+    @Column(name = "formato")
+    private FormatoEvento formatoEvento;
 
     @Schema(description = "Enlace del evento", example = "https://example.com.", required = false)
     @NotBlank
