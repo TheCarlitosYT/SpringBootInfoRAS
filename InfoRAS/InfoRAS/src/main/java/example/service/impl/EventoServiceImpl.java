@@ -1,6 +1,7 @@
 package example.service.impl;
 
 import example.domain.Eventos;
+import example.domain.FormatoEvento;
 import example.domain.TipoEvento;
 import example.domain.Usuario;
 import example.dto.EventosDTO;
@@ -66,6 +67,12 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public Set<EventosDTO> findByLugar(String lugar) {
         Set<Eventos> eventos = eventoRepository.findByLugar(lugar);
+        return eventos.stream().map(eventoMapper::toDTO).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<EventosDTO> findByFormatoEvento(FormatoEvento formatoEvento) {
+        Set<Eventos> eventos = eventoRepository.findByFormatoEvento(formatoEvento);
         return eventos.stream().map(eventoMapper::toDTO).collect(Collectors.toSet());
     }
 

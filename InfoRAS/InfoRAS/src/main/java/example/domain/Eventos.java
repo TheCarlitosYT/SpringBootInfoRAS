@@ -58,10 +58,11 @@ public class Eventos {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    public Eventos(Long id_eventos, TipoEvento tipoEvento, String titulo, String enlace, String descripcion, Date fecha, String lugar, Asociacion asociacion, Usuario usuario) {
+    public Eventos(Long id_eventos, String titulo, TipoEvento tipoEvento, FormatoEvento formatoEvento, String enlace, String descripcion, Date fecha, String lugar, Asociacion asociacion, Usuario usuario) {
         this.id_eventos = id_eventos;
-        this.tipoEvento = tipoEvento;
         this.titulo = titulo;
+        this.tipoEvento = tipoEvento;
+        this.formatoEvento = formatoEvento;
         this.enlace = enlace;
         this.descripcion = descripcion;
         this.fecha = fecha;
@@ -145,13 +146,21 @@ public class Eventos {
         this.usuario = usuario;
     }
 
+    public FormatoEvento getFormatoEvento() {
+        return formatoEvento;
+    }
+
+    public void setFormatoEvento(FormatoEvento formatoEvento) {
+        this.formatoEvento = formatoEvento;
+    }
 
     @Override
     public String toString() {
         return "Eventos{" +
                 "id_eventos=" + id_eventos +
-                ", tipoEvento=" + tipoEvento +
                 ", titulo='" + titulo + '\'' +
+                ", tipoEvento=" + tipoEvento +
+                ", formatoEvento=" + formatoEvento +
                 ", enlace='" + enlace + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", fecha=" + fecha +

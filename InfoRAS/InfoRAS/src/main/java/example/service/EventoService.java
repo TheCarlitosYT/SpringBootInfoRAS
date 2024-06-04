@@ -1,5 +1,6 @@
 package example.service;
 
+import example.domain.FormatoEvento;
 import example.domain.TipoEvento;
 import example.dto.EventosDTO;
 import jakarta.validation.Valid;
@@ -22,6 +23,8 @@ public interface EventoService {
     Set<EventosDTO> findByFecha(Date fecha);
 
     Set<EventosDTO> findByLugar(String lugar);
+
+    Set<EventosDTO> findByFormatoEvento(FormatoEvento formatoEvento);
 
     EventosDTO addEvento(@Valid EventosDTO eventosDTO);
     EventosDTO modifyEvento(long id_Eventos, EventosDTO newEventosDTO);

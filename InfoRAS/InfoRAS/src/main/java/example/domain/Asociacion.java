@@ -14,7 +14,7 @@ import jakarta.validation.constraints.NotNull;
 @Table(name="Asociacion")
 public class Asociacion {
 
-    @Schema(description = "Identificador del usuario", example = "1", required = false)
+    @Schema(description = "Identificador del usuario null", example = "1", required = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_asociacion")
